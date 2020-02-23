@@ -4,3 +4,10 @@
   justify-content: center;
   align-items: center;
 }
+
+
+mat-card img {
+  object-fit: cover; 
+  width: 10vw; 
+  height: 50vh;
+}
