@@ -26,10 +26,12 @@ export class CardGameComponent implements OnInit {
   }
 
   refreshDeck() {
+    this.cardsDrawn = null;
     this.apiService.brandNewDeck().subscribe(response => {
       this.currentDeckId = response.deck_id;
-      this.openDialog();
-      this.cardsDrawn = null;
+      this.apiService.shuffleCards(this.currentDeckId).subscribe(() => {
+        
+      });
     })
   }
 
@@ -37,6 +39,10 @@ export class CardGameComponent implements OnInit {
     this.apiService.drawACard(this.currentDeckId, this.nrOfCardsToDraw).subscribe(response =>
     {
       console.info(response);
+      if (response.error) {
+        this.openDialog(); //TODO: insert error message into dialog
+      }
+
       this.cardsDrawn = response.cards;
     });
   }
@@ -47,7 +53,7 @@ export class CardGameComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(CardsShuffledConfirmationDialogComponent, { width: '250px' });
+    const dialogRef = this.dialog.open(NotEnoughCardsDialogComponent, { width: '250px' });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -59,16 +65,16 @@ export class CardGameComponent implements OnInit {
 
 @Component({
   selector: 'cards-shuffled-confirmation-dialog',
-  template: `<div> A new deck of cards has been shuffled </div>
+  template: `<div>Not enough cards left to draw. Please draw a new deck o cards.</div>
     <div mat-dialog-actions>      
       <button mat-button [mat-dialog-close] cdkFocusInitial> Ok </button>
     </div>
   `,
 })
-export class CardsShuffledConfirmationDialogComponent {
+export class NotEnoughCardsDialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<CardsShuffledConfirmationDialogComponent>) { }
+    public dialogRef: MatDialogRef<NotEnoughCardsDialogComponent>) { }
 
   onNoClick(): void {
     this.dialogRef.close();

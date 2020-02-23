@@ -6,4 +6,5 @@ export interface DeckResponse {
   deck_id: string;
   shuffled: boolean | null;
   remaining: number;
+  error: string | null;
 }
