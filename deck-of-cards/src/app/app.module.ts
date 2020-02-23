@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CardGameComponent, NotEnoughCardsDialogComponent } from './components/card-game/card-game.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatSliderModule } from '@angular/material/slider';
     MatIconModule,
     MatDialogModule,
     MatCardModule,
-    MatSliderModule
+    MatSliderModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent],
